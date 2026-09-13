@@ -1959,19 +1959,11 @@ async function doSubmitBooking(){
   }
 
   if(!res.ok){
-  if(waWindow){
-    try{waWindow.close();}catch(e){}
+    // Supabase gagal/error — JANGAN buka WhatsApp, JANGAN tampilkan booking berhasil.
+    if(waWindow){try{waWindow.close();}catch(e){}}
+    showToast('❌ Booking gagal disimpan ke database. Silakan coba lagi.');
+    return;
   }
-
-  console.error('BOOKING GAGAL:', res.error);
-
-  showToast(
-    '❌ Booking gagal: ' +
-    (res.error || 'Kesalahan database.')
-  );
-
-  return;
-}
 
   const lines=[
     'Halo Profiled Visuals, saya ingin konfirmasi booking berikut:',
